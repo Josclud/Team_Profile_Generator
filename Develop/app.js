@@ -40,7 +40,7 @@ const next = () => {
 const makeManager = ({ name, id, email }) => {
   inquirer.prompt([
     {
-      type: 'input',
+      type: 'number',
       name: 'officeNumber',
       message: 'What is the managers office Number?'
     }
