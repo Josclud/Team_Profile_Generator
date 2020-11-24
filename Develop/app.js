@@ -100,7 +100,7 @@ const addEmployee = () => {
       message: 'What is the employees ID?'
     },
     {
-      type: 'number',
+      type: 'input',
       name: 'email',
       message: 'What is the employees email?'
     }
