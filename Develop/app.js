@@ -20,7 +20,7 @@ const next = () => {
     type: 'list',
     name: 'choice',
     message: 'What would you like to do now?',
-    choices: ['Add another employee', 'Finish']
+    choices: ['Enter another team member', 'Finish']
   })
     .then(({ choice }) => {
       switch (choice) {
@@ -46,7 +46,7 @@ const makeManager = ({ name, id, email }) => {
     }
   ])
     .then(({ officeNumber }) => {
-      employees.push(new Employee(name, id, email, officeNumber))
+      employees.push(new Manager(name, id, email, officeNumber))
       next()
     })
     .catch(err => console.log(err))
@@ -61,7 +61,7 @@ const makeEngineer = ({ name, id, email }) => {
     }
   ])
     .then(({ github }) => {
-      employees.push(new Employee(name, id, email, github))
+      employees.push(new Engineer(name, id, email, github))
       next()
     })
     .catch(err => console.log(err))
@@ -75,7 +75,7 @@ const makeIntern = ({ name, id, email }) => {
     }
   ])
     .then(({ school }) => {
-      employees.push(new Employee(name, id, email, school))
+      employees.push(new Intern(name, id, email, school))
       next()
     })
     .catch(err => console.log(err))
@@ -97,7 +97,7 @@ const addEmployee = () => {
     {
       type: 'number',
       name: 'id',
-      message: 'What is the team members ID?'
+      message: 'What is the employees ID?'
     },
     {
       type: 'number',
@@ -111,13 +111,13 @@ const addEmployee = () => {
           employees.push(new Employee(employee.name, employee.id, employee.email))
           next()
           break
-        case 'manager':
+        case 'Manager':
           makeManager(employee)
           break
-        case 'engineer':
+        case 'Engineer':
           makeEngineer(employee)
           break
-        case 'intern':
+        case 'Intern':
           makeIntern(employee)
           break
       }
