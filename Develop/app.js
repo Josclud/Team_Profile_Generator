@@ -11,6 +11,131 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
+
+
+let employees = []
+
+const next = () => {
+  inquirer.prompt({
+    type: 'list',
+    name: 'choice',
+    message: 'What would you like to do now?',
+    choices: ['Make another item', 'Finish']
+  })
+    .then(({ choice }) => {
+      switch (choice) {
+        case 'Enter another team member':
+          menu()
+          break
+        case 'Finish':
+          fs.writeFile(path.join(__dirname, 'output', 'main.html'), render(employee), err => {
+            if (err) { console.log(err) }
+          })
+          break
+      }
+    })
+    .catch(err => console.log(err))
+}
+
+const makeManager = ({ name, id, email }) => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'officeNumber',
+      message: 'What is the managers office Number?'
+    }
+  ])
+    .then(({ officeNumber }) => {
+      employees.push(new employee(name, id, email, officeNumber))
+      next()
+    })
+    .catch(err => console.log(err))
+}
+
+const makeEngineer = ({ name, id, email }) => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'github',
+      message: 'What is the engineers github?'
+    }
+  ])
+    .then(({ github }) => {
+      employees.push(new employee(name, id, email, github))
+      next()
+    })
+    .catch(err => console.log(err))
+}
+const makeIntern = ({ name, id, email }) => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'school',
+      message: 'What is the interns school?'
+    }
+  ])
+    .then(({ officeNumber }) => {
+      employees.push(new employee(name, id, email, school))
+      next()
+    })
+    .catch(err => console.log(err))
+}
+
+const addEmployee = () => {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'type',
+      message: 'What tpye of employee profile',
+      choices: ['Manager', 'Engineer', 'Intern']
+    },
+    {
+      type: 'input',
+      name: 'name',
+      message: 'What is the name of the employee?'
+    },
+    {
+      type: 'number',
+      name: 'id',
+      message: 'What is the team members ID?'
+    },
+    {
+      type: 'number',
+      name: 'email',
+      message: 'What is the employees email?'
+    }
+  ])
+    .then(employee => {
+      switch (employee.type) {
+        case 'employee':
+          employees.push(new Employee(employee.name, employee.id, employee.email))
+          next()
+          break
+        case 'manager':
+          makeManager(employee)
+          break
+        case 'engineer':
+          makeEngineer(employee)
+          break
+        case 'intern':
+          makeInter(employee)
+          break
+      }
+    })
+    .catch(err => console.log(err))
+}
+
+addEmployee()
+
+
+
+
+
+
+
+
+
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
